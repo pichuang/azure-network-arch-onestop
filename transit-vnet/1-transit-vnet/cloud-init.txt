@@ -1,0 +1,24 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - iputils-ping
+  - mtr
+  - git
+  - vim
+  - dnsutils
+
+write_files:
+  - owner: repairman:repairman
+    path: /home/repairman/transit-vnet.conf
+    content: |
+      nic-spoke1 10.73.31.4
+      nic-spoke2 10.73.33.4
+      nic-hub 10.73.30.164
+      firewall-hub 10.73.30.4
+
+runcmd:
+  - cd /home/repairman
+  - git clone https://github.com/upa/deadman
+  - chown -R /home/repairman/deadman
