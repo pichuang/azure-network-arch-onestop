@@ -1,79 +1,81 @@
-resource "azurerm_virtual_network" "vnet-hub-japaneast" {
+# https://blog.pichuang.com.tw/azure-subnets.html
+
+resource "azurerm_virtual_network" "vnet-hub" {
   address_space       = ["10.73.30.0/24"]
-  location            = "japaneast"
-  name                = "vnet-hub-japaneast"
+  location            = var.lab-location
+  name                = "vnet-hub"
   resource_group_name = var.lab-rg
   tags                = var.tags
 }
 
-resource "azurerm_subnet" "azurefirewallsubnet-japaneast" {
+resource "azurerm_subnet" "azurefirewallsubnet" {
   name                 = "AzureFirewallSubnet"
   resource_group_name  = var.lab-rg
-  virtual_network_name = azurerm_virtual_network.vnet-hub-japaneast.name
+  virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.0/26"]
 }
 
 resource "azurerm_subnet" "routeserversubnet" {
   name                 = "RouteServerSubnet"
   resource_group_name  = var.lab-rg
-  virtual_network_name = azurerm_virtual_network.vnet-hub-japaneast.name
+  virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.64/26"]
 }
 
-resource "azurerm_subnet" "gatewaysubnet-japaneast" {
+resource "azurerm_subnet" "gatewaysubnet" {
   name                 = "GatewaySubnet"
   resource_group_name  = var.lab-rg
-  virtual_network_name = azurerm_virtual_network.vnet-hub-japaneast.name
+  virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.128/27"]
 }
 
-resource "azurerm_subnet" "subnet-hub-japaneast" {
-  name                 = "subnet-hub-japaneast"
+resource "azurerm_subnet" "subnet-hub" {
+  name                 = "subnet-hub"
   resource_group_name  = var.lab-rg
-  virtual_network_name = azurerm_virtual_network.vnet-hub-japaneast.name
+  virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.160/27"]
 }
 
 resource "azurerm_subnet" "azurebastionsubnet" {
   name                 = "AzureBastionSubnet"
   resource_group_name  = var.lab-rg
-  virtual_network_name = azurerm_virtual_network.vnet-hub-japaneast.name
+  virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.224/27"]
 }
 
 #
-# VNet Peering to vnet-spoke1-japaneast
+# VNet Peering to vnet-spoke1
 #
 # Ref: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering
 
-resource "azurerm_virtual_network_peering" "peer-hub-to-spoke1-japaneast" {
-  name                      = "peer-hub-to-spoke1-japaneast"
+resource "azurerm_virtual_network_peering" "peer-hub-to-spoke1" {
+  name                      = "peer-hub-to-spoke1"
   resource_group_name       = var.lab-rg
-  virtual_network_name      = azurerm_virtual_network.vnet-hub-japaneast.name
-  remote_virtual_network_id = azurerm_virtual_network.vnet-spoke1-japaneast.id
+  virtual_network_name      = azurerm_virtual_network.vnet-hub.name
+  remote_virtual_network_id = azurerm_virtual_network.vnet-spoke1.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
   use_remote_gateways = false
-  # allow_gateway_transit
+  allow_gateway_transit = false
 }
 
-resource "azurerm_virtual_network_peering" "peer-hub-to-spoke2-japaneast" {
-  name                      = "peer-hub-to-spoke2-japaneast"
+resource "azurerm_virtual_network_peering" "peer-hub-to-spoke2" {
+  name                      = "peer-hub-to-spoke2"
   resource_group_name       = var.lab-rg
-  virtual_network_name      = azurerm_virtual_network.vnet-hub-japaneast.name
-  remote_virtual_network_id = azurerm_virtual_network.vnet-spoke2-japaneast.id
+  virtual_network_name      = azurerm_virtual_network.vnet-hub.name
+  remote_virtual_network_id = azurerm_virtual_network.vnet-spoke2.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
   use_remote_gateways = false
-  # allow_gateway_transit
+  allow_gateway_transit = false
 }
 
 #
 # NAT Gateway
 #
-# resource "azurerm_public_ip" "pip-natgateway-japaneast" {
-#   name                = "pip-natgateway-japaneast"
-#   location            = "japaneast"
+# resource "azurerm_public_ip" "pip-natgateway" {
+#   name                = "pip-natgateway"
+#   location            = var.lab-location
 #   resource_group_name = var.lab-rg
 #   allocation_method   = "Static"
 #   sku                 = "Standard"
@@ -81,35 +83,35 @@ resource "azurerm_virtual_network_peering" "peer-hub-to-spoke2-japaneast" {
 # }
 
 # # Ref: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/nat_gateway
-# resource "azurerm_nat_gateway" "hub-natgw-japaneast" {
-#   name                    = "hub-natgw-japaneast"
-#   location                = "japaneast"
+# resource "azurerm_nat_gateway" "hub-natgw" {
+#   name                    = "hub-natgw"
+#   location                = var.lab-location
 #   resource_group_name     = var.lab-rg
 #   sku_name                = "Standard"
 #   idle_timeout_in_minutes = 4
 #   zones                   = ["1"]
 # }
 
-# resource "azurerm_nat_gateway_public_ip_association" "bridge-natgw-and-pip-japaneast" {
-#   nat_gateway_id       = azurerm_nat_gateway.hub-natgw-japaneast.id
-#   public_ip_address_id = azurerm_public_ip.pip-natgateway-japaneast.id
+# resource "azurerm_nat_gateway_public_ip_association" "bridge-natgw-and-pip" {
+#   nat_gateway_id       = azurerm_nat_gateway.hub-natgw.id
+#   public_ip_address_id = azurerm_public_ip.pip-natgateway.id
 # }
 
 #
 # Azure Bastion
 #
 
-resource "azurerm_public_ip" "pip-bastion-japaneast" {
-  name                = "pip-bastion-japaneast"
-  location            = "japaneast"
+resource "azurerm_public_ip" "pip-bastion" {
+  name                = "pip-bastion"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
   allocation_method   = "Static"
   sku                 = "Standard"
 }
 
-resource "azurerm_bastion_host" "bastion-japaneast" {
-  name                = "bastion-japaneast"
-  location            = "japaneast"
+resource "azurerm_bastion_host" "bastion" {
+  name                = "bastion"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
 
   sku = "Standard"
@@ -123,7 +125,7 @@ resource "azurerm_bastion_host" "bastion-japaneast" {
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.azurebastionsubnet.id
-    public_ip_address_id = azurerm_public_ip.pip-bastion-japaneast.id
+    public_ip_address_id = azurerm_public_ip.pip-bastion.id
   }
 }
 
@@ -131,25 +133,25 @@ resource "azurerm_bastion_host" "bastion-japaneast" {
 # Azure Firewall
 #
 
-resource "azurerm_public_ip" "pip-fw-1-japaneast" {
-  name                = "pip-fw-1-japaneast"
-  location            = "japaneast"
+resource "azurerm_public_ip" "pip-fw-1" {
+  name                = "pip-fw-1"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
   allocation_method   = "Static"
   sku                 = "Standard"
 }
 
-resource "azurerm_firewall" "firewall-japaneast" {
-  name                = "firewall-japaneast"
-  location            = "japaneast"
+resource "azurerm_firewall" "firewall" {
+  name                = "firewall"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
   sku_name            = "AZFW_VNet"
   sku_tier            = "Standard"
 
   ip_configuration {
-    name                 = "fw-1-config-japaneast"
-    subnet_id            = azurerm_subnet.azurefirewallsubnet-japaneast.id
-    public_ip_address_id = azurerm_public_ip.pip-fw-1-japaneast.id
+    name                 = "fw-1-config"
+    subnet_id            = azurerm_subnet.azurefirewallsubnet.id
+    public_ip_address_id = azurerm_public_ip.pip-fw-1.id
   }
 }
 
@@ -157,57 +159,57 @@ resource "azurerm_firewall" "firewall-japaneast" {
 # Azure VNG Gateway
 #
 
-resource "azurerm_public_ip" "pip-vpn1-japaneast" {
-  name                = "pip-vpn1-japaneast"
-  location            = "japaneast"
+resource "azurerm_public_ip" "pip-vpn1" {
+  name                = "pip-vpn1"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
   allocation_method = "Dynamic"
 }
 
-resource "azurerm_public_ip" "pip-vpn2-japaneast" {
-  name                = "pip-vpn2-japaneast"
-  location            = "japaneast"
-  resource_group_name = var.lab-rg
-  allocation_method = "Dynamic"
-}
+# resource "azurerm_public_ip" "pip-vpn2" {
+#   name                = "pip-vpn2"
+#   location            = var.lab-location
+#   resource_group_name = var.lab-rg
+#   allocation_method = "Dynamic"
+# }
 
-resource "azurerm_virtual_network_gateway" "vng-s2svpn-japaneast" {
-  name                = "vng-s2svpn-japaneast"
-  location            = "japaneast"
+resource "azurerm_virtual_network_gateway" "vng-s2svpn" {
+  name                = "vng-s2svpn"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
 
   type     = "Vpn"
   vpn_type = "RouteBased"
 
-  active_active = true
+  active_active = false
   enable_bgp    = false
   sku           = "VpnGw1"
 
   ip_configuration {
     name                          = "vnetGatewayConfig1"
-    public_ip_address_id          = azurerm_public_ip.pip-vpn1-japaneast.id
+    public_ip_address_id          = azurerm_public_ip.pip-vpn1.id
     private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.gatewaysubnet-japaneast.id
+    subnet_id                     = azurerm_subnet.gatewaysubnet.id
   }
 
-  ip_configuration {
-    name                          = "vnetGatewayConfig2"
-    public_ip_address_id          = azurerm_public_ip.pip-vpn2-japaneast.id
-    private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.gatewaysubnet-japaneast.id
-  }
+  # ip_configuration {
+  #   name                          = "vnetGatewayConfig2"
+  #   public_ip_address_id          = azurerm_public_ip.pip-vpn2.id
+  #   private_ip_address_allocation = "Dynamic"
+  #   subnet_id                     = azurerm_subnet.gatewaysubnet.id
+  # }
 
 }
 
 
 #
-# Create a VM in the subnet-hub-japaneast
+# Create a VM in the subnet-hub
 #
 
 # Create Network Security Group and rule
 resource "azurerm_network_security_group" "nsg-hub" {
   name                = "nsg-hub"
-  location            = "japaneast"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
 
   security_rule {
@@ -226,12 +228,12 @@ resource "azurerm_network_security_group" "nsg-hub" {
 # Create network interface card
 resource "azurerm_network_interface" "nic-hub" {
   name                = "nic-hub"
-  location            = "japaneast"
+  location            = var.lab-location
   resource_group_name = var.lab-rg
 
   ip_configuration {
     name                          = "ipconfig-nic-hub"
-    subnet_id                     = azurerm_subnet.subnet-hub-japaneast.id
+    subnet_id                     = azurerm_subnet.subnet-hub.id
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.73.30.164"
   }
@@ -245,7 +247,7 @@ resource "azurerm_network_interface_security_group_association" "connect-nsg-and
 
 resource "azurerm_linux_virtual_machine" "vm-hub" {
   name                  = "vm-hub"
-  location              = "japaneast"
+  location              = var.lab-location
   resource_group_name   = var.lab-rg
   network_interface_ids = [azurerm_network_interface.nic-hub.id]
   size                  = "Standard_DC2s_v3"
@@ -274,5 +276,23 @@ resource "azurerm_linux_virtual_machine" "vm-hub" {
   }
 
   custom_data = filebase64("cloud-init.txt")
+
+}
+
+#
+# Log Analytics Workspace
+#
+
+resource "azurerm_log_analytics_workspace" "law-hub" {
+
+  name                = "law-hub"
+  location            = var.lab-location
+  resource_group_name = var.lab-rg
+  sku                 = "Free"
+  retention_in_days   = 30 # 7 (Free Tier Only), 30 and 730
+  # daily_quota_gb = 0.5
+  internet_ingestion_enabled         = true
+  internet_query_enabled             = true
+  reservation_capacity_in_gb_per_day = 100
 
 }

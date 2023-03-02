@@ -1,20 +1,22 @@
 variable "lab-rg" {
   description = "Resource Group for this lab"
   type        = string
-  default     = "rg-transit-vnet"
+  default     = "rg-challenge-01"
 }
 
 variable "lab-location" {
   description = "Location for this lab"
   type        = string
-  default     = "eastus"
+  default     = "japaneast"
 }
 
 variable "tags" {
   description = "Set of tags for resources"
   type        = map(any)
   default = {
-    ApplicationName = "transit-vnet"
+    ApplicationName  = "${var.lab-rg}"
+    Region           = "${var.lab-location}"
+    LastModifiedTime = "${timestamp()}"
   }
 }
 
