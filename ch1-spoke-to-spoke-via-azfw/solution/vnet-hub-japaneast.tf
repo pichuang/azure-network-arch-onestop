@@ -49,14 +49,14 @@ resource "azurerm_subnet" "azurebastionsubnet" {
 # Ref: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering
 
 resource "azurerm_virtual_network_peering" "peer-hub-to-spoke1" {
-  name                      = "peer-hub-to-spoke1"
-  resource_group_name       = var.lab-rg
-  virtual_network_name      = azurerm_virtual_network.vnet-hub.name
-  remote_virtual_network_id = azurerm_virtual_network.vnet-spoke1.id
+  name                         = "peer-hub-to-spoke1"
+  resource_group_name          = var.lab-rg
+  virtual_network_name         = azurerm_virtual_network.vnet-hub.name
+  remote_virtual_network_id    = azurerm_virtual_network.vnet-spoke1.id
   allow_virtual_network_access = true
-  allow_forwarded_traffic = true
-  use_remote_gateways = false
-  allow_gateway_transit = true
+  allow_forwarded_traffic      = true
+  use_remote_gateways          = false
+  allow_gateway_transit        = true
 
   depends_on = [
     azurerm_virtual_network_gateway.vng-s2svpn
@@ -64,14 +64,14 @@ resource "azurerm_virtual_network_peering" "peer-hub-to-spoke1" {
 }
 
 resource "azurerm_virtual_network_peering" "peer-hub-to-spoke2" {
-  name                      = "peer-hub-to-spoke2"
-  resource_group_name       = var.lab-rg
-  virtual_network_name      = azurerm_virtual_network.vnet-hub.name
-  remote_virtual_network_id = azurerm_virtual_network.vnet-spoke2.id
+  name                         = "peer-hub-to-spoke2"
+  resource_group_name          = var.lab-rg
+  virtual_network_name         = azurerm_virtual_network.vnet-hub.name
+  remote_virtual_network_id    = azurerm_virtual_network.vnet-spoke2.id
   allow_virtual_network_access = true
-  allow_forwarded_traffic = true
-  use_remote_gateways = false
-  allow_gateway_transit = true
+  allow_forwarded_traffic      = true
+  use_remote_gateways          = false
+  allow_gateway_transit        = true
 
   depends_on = [
     azurerm_virtual_network_gateway.vng-s2svpn
@@ -122,13 +122,13 @@ resource "azurerm_bastion_host" "bastion" {
   location            = var.lab-location
   resource_group_name = var.lab-rg
 
-  sku = "Standard"
-  tunneling_enabled = true
-  file_copy_enabled = true
-  copy_paste_enabled = true
-  ip_connect_enabled = true
+  sku                    = "Standard"
+  tunneling_enabled      = true
+  file_copy_enabled      = true
+  copy_paste_enabled     = true
+  ip_connect_enabled     = true
   shareable_link_enabled = true
-  scale_units = 2
+  scale_units            = 2
 
   ip_configuration {
     name                 = "configuration"
@@ -145,7 +145,7 @@ resource "azurerm_public_ip" "pip-vpn1" {
   name                = "pip-vpn1"
   location            = var.lab-location
   resource_group_name = var.lab-rg
-  allocation_method = "Dynamic"
+  allocation_method   = "Dynamic"
 }
 
 # resource "azurerm_public_ip" "pip-vpn2" {
@@ -250,7 +250,7 @@ resource "azurerm_linux_virtual_machine" "vm-hub" {
   computer_name                   = "vm-hub"
   admin_username                  = var.admin_username
   disable_password_authentication = false
-  admin_password = var.admin_password
+  admin_password                  = var.admin_password
 
   admin_ssh_key {
     username   = var.admin_username

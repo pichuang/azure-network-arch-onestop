@@ -52,10 +52,10 @@ resource "azurerm_firewall_policy" "firewall-policy-for-transit" {
   }
 
   insights {
-    enabled = true
+    enabled                            = true
     default_log_analytics_workspace_id = azurerm_log_analytics_workspace.law-log-center.id
     log_analytics_workspace {
-      id = azurerm_log_analytics_workspace.law-log-center.id
+      id                = azurerm_log_analytics_workspace.law-log-center.id
       firewall_location = var.lab-location
     }
     retention_in_days = 7

@@ -19,14 +19,14 @@ resource "azurerm_subnet" "subnet-spoke2" {
 # Ref: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering
 
 resource "azurerm_virtual_network_peering" "peer-spoke2-to-hub" {
-  name                      = "peer-spoke2-to-hub"
-  resource_group_name       = var.lab-rg
-  virtual_network_name      = azurerm_virtual_network.vnet-spoke2.name
-  remote_virtual_network_id = azurerm_virtual_network.vnet-hub.id
+  name                         = "peer-spoke2-to-hub"
+  resource_group_name          = var.lab-rg
+  virtual_network_name         = azurerm_virtual_network.vnet-spoke2.name
+  remote_virtual_network_id    = azurerm_virtual_network.vnet-hub.id
   allow_virtual_network_access = true
-  allow_forwarded_traffic = true
-  use_remote_gateways = true
-  allow_gateway_transit = false
+  allow_forwarded_traffic      = true
+  use_remote_gateways          = true
+  allow_gateway_transit        = false
 
   depends_on = [
     azurerm_virtual_network_gateway.vng-s2svpn
@@ -44,9 +44,9 @@ resource "azurerm_route_table" "rt-for-spoke2" {
   disable_bgp_route_propagation = false
 
   route {
-    name           = "route-to-azfw"
-    address_prefix = "0.0.0.0/0"
-    next_hop_type  = "VirtualAppliance"
+    name                   = "route-to-azfw"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_firewall.firewall.ip_configuration[0].private_ip_address
   }
 
@@ -128,7 +128,7 @@ resource "azurerm_linux_virtual_machine" "vm-spoke2" {
   computer_name                   = "vm-spoke2"
   admin_username                  = var.admin_username
   disable_password_authentication = false
-  admin_password = var.admin_password
+  admin_password                  = var.admin_password
 
   admin_ssh_key {
     username   = var.admin_username
