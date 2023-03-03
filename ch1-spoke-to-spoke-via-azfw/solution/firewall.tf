@@ -74,8 +74,9 @@ resource "azurerm_firewall_policy_rule_collection_group" "fprcg-for-transit" {
 
   network_rule_collection {
     name     = "network-rule-collection-for-transit"
-    priority = 65000
+    priority = 200
     action   = "Allow"
+
     rule {
       name                  = "network-rule-icmp-any-to-any"
       protocols             = ["ICMP"]
@@ -85,7 +86,50 @@ resource "azurerm_firewall_policy_rule_collection_group" "fprcg-for-transit" {
     }
   }
 
+  application_rule_collection {
+    name     = "application-rule-collection-for-transit"
+    priority = 300
+    action   = "Allow"
+
+    rule {
+      name                  = "application-rule-http-any-to-os-repository"
+      protocols {
+        type = "Http"
+        port = 80
+      }
+      source_addresses      = ["*"]
+      destination_fqdns     = ["azure.archive.ubuntu.com"]
+    }
+
+    rule {
+      name                  = "application-rule-https-any-to-github"
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses      = ["*"]
+      destination_fqdns     = ["github.com"]
+    }
+
+    rule {
+      name                  = "application-rule-https-any-to-ifconfig"
+      protocols {
+        type = "Https"
+        port = 443
+      }
+
+      protocols {
+        type = "Http"
+        port = 80
+      }
+
+      source_addresses      = ["*"]
+      destination_fqdns     = ["ifconfig.me"]
+    }
+  }
+
   depends_on = [
     azurerm_firewall_policy.firewall-policy-for-transit
   ]
+
 }

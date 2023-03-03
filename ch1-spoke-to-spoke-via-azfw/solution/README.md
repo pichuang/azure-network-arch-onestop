@@ -19,6 +19,10 @@ terraform destroy
 
 ## You May Need to known
 
+### Username / Password
+
+- repairman / Lyc0r!sRec0il
+
 ### IP Address
 
 - vnet-hub (10.73.30.0/24)
@@ -44,4 +48,9 @@ az network bastion ssh --name bastion --resource-group rg-challenge-01 --target-
 
 # Access vm-spoke2 VM
 az network bastion ssh --name bastion --resource-group rg-challenge-01 --target-resource-id $(az vm show -g rg-challenge-01 -n vm-spoke2 --query "id" --output tsv) --auth-type password --username repairman
+```
+
+### Check Public IP
+``` bash
+curl ifconfig.me/all
 ```

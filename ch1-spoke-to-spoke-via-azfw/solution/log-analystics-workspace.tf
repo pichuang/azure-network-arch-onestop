@@ -24,7 +24,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall" {
   log_analytics_workspace_id = azurerm_log_analytics_workspace.law-log-center.id
 
   # Dedicated or AzureDiagnostics
-  log_analytics_destination_type = "Dedicated"
+  log_analytics_destination_type = "AzureDiagnostics"
 
   # enabled_log {
   #   category = "allLogs"
@@ -39,6 +39,15 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall" {
   log {
     enabled  = true
     category = "AzureFirewallNetworkRule"
+
+    retention_policy {
+      enabled = true
+    }
+  }
+
+  log {
+    enabled  = true
+    category = "AZFWNetworkRule"
 
     retention_policy {
       enabled = true

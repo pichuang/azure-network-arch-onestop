@@ -44,6 +44,30 @@ resource "azurerm_subnet" "azurebastionsubnet" {
 }
 
 #
+# Create Route Table
+#
+
+resource "azurerm_route_table" "rt-for-fw" {
+  name                          = "rt-for-fw"
+  location                      = var.lab-location
+  resource_group_name           = var.lab-rg
+  disable_bgp_route_propagation = false
+
+  route {
+    name                   = "route-to-internet"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_type          = "Internet"
+  }
+
+}
+
+resource "azurerm_subnet_route_table_association" "associate-rt-to-fw-and-azurefirewallsubnet" {
+  subnet_id      = azurerm_subnet.azurefirewallsubnet.id
+  route_table_id = azurerm_route_table.rt-for-fw.id
+}
+
+
+#
 # VNet Peering to vnet-spoke1
 #
 # Ref: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering

@@ -29,4 +29,3 @@ runcmd:
   - cd /home/repairman
   - git clone https://github.com/upa/deadman
   - chown -R /home/repairman/deadman
-  - bash /home/repairman/simple-http-server.py &
