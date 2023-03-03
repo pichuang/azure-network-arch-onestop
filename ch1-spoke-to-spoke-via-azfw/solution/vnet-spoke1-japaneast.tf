@@ -25,8 +25,39 @@ resource "azurerm_virtual_network_peering" "peer-spoke1-to-hub" {
   remote_virtual_network_id = azurerm_virtual_network.vnet-hub.id
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
-  use_remote_gateways = false
+  use_remote_gateways = true
   allow_gateway_transit = false
+
+  depends_on = [
+    azurerm_virtual_network_gateway.vng-s2svpn
+  ]
+}
+
+#
+# Create Route Table
+#
+
+resource "azurerm_route_table" "rt-for-spoke1" {
+  name                          = "rt-for-spoke1"
+  location                      = var.lab-location
+  resource_group_name           = var.lab-rg
+  disable_bgp_route_propagation = false
+
+  route {
+    name           = "route-to-azfw"
+    address_prefix = "0.0.0.0/0"
+    next_hop_type  = "VirtualAppliance"
+    next_hop_in_ip_address = azurerm_firewall.firewall.ip_configuration[0].private_ip_address
+  }
+
+  depends_on = [
+    azurerm_firewall.firewall
+  ]
+}
+
+resource "azurerm_subnet_route_table_association" "associate-rt-to-spoke1-and-subnet-spoke1" {
+  subnet_id      = azurerm_subnet.subnet-spoke1.id
+  route_table_id = azurerm_route_table.rt-for-spoke1.id
 }
 
 #

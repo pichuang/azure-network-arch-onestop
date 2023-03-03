@@ -7,7 +7,11 @@ terraform {
   }
 }
 
-
 provider "azurerm" {
   features {}
+}
+
+resource "azurerm_resource_group" "resource-group" {
+  location = var.lab-location
+  name     = var.lab-rg
 }

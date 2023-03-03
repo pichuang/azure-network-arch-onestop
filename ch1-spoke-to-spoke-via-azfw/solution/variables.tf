@@ -14,9 +14,7 @@ variable "tags" {
   description = "Set of tags for resources"
   type        = map(any)
   default = {
-    ApplicationName  = "${var.lab-rg}"
-    Region           = "${var.lab-location}"
-    LastModifiedTime = "${timestamp()}"
+    ApplicationName  = "Challenge 01"
   }
 }
 

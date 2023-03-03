@@ -56,7 +56,11 @@ resource "azurerm_virtual_network_peering" "peer-hub-to-spoke1" {
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
   use_remote_gateways = false
-  allow_gateway_transit = false
+  allow_gateway_transit = true
+
+  depends_on = [
+    azurerm_virtual_network_gateway.vng-s2svpn
+  ]
 }
 
 resource "azurerm_virtual_network_peering" "peer-hub-to-spoke2" {
@@ -67,7 +71,11 @@ resource "azurerm_virtual_network_peering" "peer-hub-to-spoke2" {
   allow_virtual_network_access = true
   allow_forwarded_traffic = true
   use_remote_gateways = false
-  allow_gateway_transit = false
+  allow_gateway_transit = true
+
+  depends_on = [
+    azurerm_virtual_network_gateway.vng-s2svpn
+  ]
 }
 
 #
@@ -126,32 +134,6 @@ resource "azurerm_bastion_host" "bastion" {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.azurebastionsubnet.id
     public_ip_address_id = azurerm_public_ip.pip-bastion.id
-  }
-}
-
-#
-# Azure Firewall
-#
-
-resource "azurerm_public_ip" "pip-fw-1" {
-  name                = "pip-fw-1"
-  location            = var.lab-location
-  resource_group_name = var.lab-rg
-  allocation_method   = "Static"
-  sku                 = "Standard"
-}
-
-resource "azurerm_firewall" "firewall" {
-  name                = "firewall"
-  location            = var.lab-location
-  resource_group_name = var.lab-rg
-  sku_name            = "AZFW_VNet"
-  sku_tier            = "Standard"
-
-  ip_configuration {
-    name                 = "fw-1-config"
-    subnet_id            = azurerm_subnet.azurefirewallsubnet.id
-    public_ip_address_id = azurerm_public_ip.pip-fw-1.id
   }
 }
 
@@ -276,23 +258,5 @@ resource "azurerm_linux_virtual_machine" "vm-hub" {
   }
 
   custom_data = filebase64("cloud-init.txt")
-
-}
-
-#
-# Log Analytics Workspace
-#
-
-resource "azurerm_log_analytics_workspace" "law-hub" {
-
-  name                = "law-hub"
-  location            = var.lab-location
-  resource_group_name = var.lab-rg
-  sku                 = "Free"
-  retention_in_days   = 30 # 7 (Free Tier Only), 30 and 730
-  # daily_quota_gb = 0.5
-  internet_ingestion_enabled         = true
-  internet_query_enabled             = true
-  reservation_capacity_in_gb_per_day = 100
 
 }
