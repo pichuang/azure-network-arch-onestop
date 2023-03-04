@@ -28,6 +28,7 @@ class TestApplicationRules(unittest.TestCase):
     def test_to_github(self):
         github = self.host.addr("github.com")
         self.assertTrue(github.is_resolvable)
+        self.assertTrue(github.port(443).is_reachable)
         # self.assertFalse(github.is_reachable)
 
     def test_to_ifconfig_me(self):
@@ -39,7 +40,6 @@ class TestApplicationRules(unittest.TestCase):
         ubuntu_repo = self.host.addr("azure.archive.ubuntu.com")
         self.assertTrue(ubuntu_repo.is_resolvable)
         # self.assertFalse(ubuntu_repo.is_reachable)
-
 
     def test_to_pypi(self):
         pypi = self.host.addr("pypi.org")
