@@ -8,7 +8,7 @@ packages:
   - git
   - vim
   - dnsutils
-  - ansible
+  - python3-pip
 
 write_files:
   - path: /home/repairman/transit-vnet.conf
@@ -28,3 +28,5 @@ runcmd:
   - cd /home/repairman
   - git clone https://github.com/upa/deadman
   - chown -R /home/repairman/deadman
+  - pip install --upgrade pip
+  - pip install pytest-testinfra

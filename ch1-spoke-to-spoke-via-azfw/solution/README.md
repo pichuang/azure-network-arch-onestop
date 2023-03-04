@@ -54,3 +54,7 @@ az network bastion ssh --name bastion --resource-group rg-challenge-01 --target-
 ``` bash
 curl ifconfig.me/all
 ```
+
+### Test Driven Development
+
+- [ ] Test 1: vm-hub-test can ping vm-spoke1-test

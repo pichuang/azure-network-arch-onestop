@@ -112,6 +112,16 @@ resource "azurerm_firewall_policy_rule_collection_group" "fprcg-for-transit" {
     }
 
     rule {
+      name = "application-rule-https-any-to-python"
+      protocols {
+        type = "Https"
+        port = 443
+      }
+      source_addresses  = ["*"]
+      destination_fqdns = ["pypi.org", "files.pythonhosted.org"]
+    }
+
+    rule {
       name = "application-rule-https-any-to-ifconfig"
       protocols {
         type = "Https"
