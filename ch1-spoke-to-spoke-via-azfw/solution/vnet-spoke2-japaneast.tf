@@ -4,6 +4,10 @@ resource "azurerm_virtual_network" "vnet-spoke2" {
   name                = "vnet-spoke2"
   resource_group_name = var.lab-rg
   tags                = var.tags
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 resource "azurerm_subnet" "subnet-spoke2" {
@@ -58,6 +62,10 @@ resource "azurerm_route_table" "rt-for-spoke2" {
 resource "azurerm_subnet_route_table_association" "associate-rt-to-spoke2-and-subnet-spoke2" {
   subnet_id      = azurerm_subnet.subnet-spoke2.id
   route_table_id = azurerm_route_table.rt-for-spoke2.id
+
+  depends_on = [
+    azurerm_linux_virtual_machine.vm-spoke2
+  ]
 }
 
 
@@ -115,7 +123,7 @@ resource "azurerm_linux_virtual_machine" "vm-spoke2" {
   os_disk {
     name                 = "disk-vm-spoke2"
     caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    storage_account_type = "Standard_LRS"
   }
 
   source_image_reference {

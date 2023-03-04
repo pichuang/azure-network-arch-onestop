@@ -6,6 +6,10 @@ resource "azurerm_virtual_network" "vnet-hub" {
   name                = "vnet-hub"
   resource_group_name = var.lab-rg
   tags                = var.tags
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 resource "azurerm_subnet" "azurefirewallsubnet" {
@@ -54,9 +58,9 @@ resource "azurerm_route_table" "rt-for-fw" {
   disable_bgp_route_propagation = false
 
   route {
-    name                   = "route-to-internet"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_type          = "Internet"
+    name           = "route-to-internet"
+    address_prefix = "0.0.0.0/0"
+    next_hop_type  = "Internet"
   }
 
 }
@@ -261,7 +265,7 @@ resource "azurerm_linux_virtual_machine" "vm-hub" {
   os_disk {
     name                 = "disk-vm-hub"
     caching              = "ReadWrite"
-    storage_account_type = "Premium_LRS"
+    storage_account_type = "Standard_LRS"
   }
 
   source_image_reference {

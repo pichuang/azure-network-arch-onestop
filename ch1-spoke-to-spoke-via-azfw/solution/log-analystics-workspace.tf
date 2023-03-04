@@ -41,7 +41,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall" {
     category = "AzureFirewallNetworkRule"
 
     retention_policy {
-      enabled = true
+      enabled = false
     }
   }
 
@@ -50,7 +50,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall" {
     category = "AZFWNetworkRule"
 
     retention_policy {
-      enabled = true
+      enabled = false
     }
   }
 
@@ -58,7 +58,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall" {
     category = "AllMetrics"
 
     retention_policy {
-      enabled = true
+      enabled = false
     }
   }
 }

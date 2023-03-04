@@ -8,18 +8,17 @@ packages:
   - git
   - vim
   - dnsutils
+  - ansible
 
 write_files:
-  - owner: repairman:repairman
-    path: /home/repairman/transit-vnet.conf
+  - path: /home/repairman/transit-vnet.conf
     content: |
       nic-spoke1 10.73.31.4
       nic-spoke2 10.73.33.4
       nic-hub 10.73.30.164
       firewall-hub 10.73.30.4
 
-  - owner: repairman:repairman
-    path: /home/repairman/simple-http-server.py
+  - path: /home/repairman/simple-http-server.py
     content: |
       #!/bin/bash
       sudo python3 -m http.server 80

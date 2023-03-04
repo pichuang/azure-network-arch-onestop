@@ -92,27 +92,27 @@ resource "azurerm_firewall_policy_rule_collection_group" "fprcg-for-transit" {
     action   = "Allow"
 
     rule {
-      name                  = "application-rule-http-any-to-os-repository"
+      name = "ap3plication-rule-http-any-to-os-repository"
       protocols {
         type = "Http"
         port = 80
       }
-      source_addresses      = ["*"]
-      destination_fqdns     = ["azure.archive.ubuntu.com"]
+      source_addresses  = ["*"]
+      destination_fqdns = ["azure.archive.ubuntu.com"]
     }
 
     rule {
-      name                  = "application-rule-https-any-to-github"
+      name = "application-rule-https-any-to-github"
       protocols {
         type = "Https"
         port = 443
       }
-      source_addresses      = ["*"]
-      destination_fqdns     = ["github.com"]
+      source_addresses  = ["*"]
+      destination_fqdns = ["github.com"]
     }
 
     rule {
-      name                  = "application-rule-https-any-to-ifconfig"
+      name = "application-rule-https-any-to-ifconfig"
       protocols {
         type = "Https"
         port = 443
@@ -123,8 +123,8 @@ resource "azurerm_firewall_policy_rule_collection_group" "fprcg-for-transit" {
         port = 80
       }
 
-      source_addresses      = ["*"]
-      destination_fqdns     = ["ifconfig.me"]
+      source_addresses  = ["*"]
+      destination_fqdns = ["ifconfig.me"]
     }
   }
 

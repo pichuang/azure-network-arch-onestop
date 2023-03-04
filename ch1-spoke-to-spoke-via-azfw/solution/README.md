@@ -36,7 +36,6 @@ terraform destroy
   - vm-spoke2-test
     - nic-spoke2: 10.73.33.4
 
-
 ### Access VMs via Azure Basion
 
 ``` bash
@@ -51,6 +50,7 @@ az network bastion ssh --name bastion --resource-group rg-challenge-01 --target-
 ```
 
 ### Check Public IP
+
 ``` bash
 curl ifconfig.me/all
 ```
