@@ -12,8 +12,18 @@
 
 ## How to validate?
 
+For Success Criteria 1 ~ 5, Please access to VMs through Azure Bastion, and run the following command to validate the success criteria.
+
 ``` bash
-pytest -v test-challenge1.py
+pytest -p no:cacheprovider -v test-challenge1.py
 ```
 
 and all tests should pass.
+
+- All pass
+![](/images/tech-ch1-allpass.gif)
+
+
+For Success Criteria 6, Please access to Azure Portal, and check the following items.
+
+![](/images/firewall-vaildation.png)

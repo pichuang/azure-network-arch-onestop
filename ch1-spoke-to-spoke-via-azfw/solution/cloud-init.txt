@@ -9,6 +9,7 @@ packages:
   - vim
   - dnsutils
   - python3-pip
+  - ansible
 
 write_files:
   - path: /home/repairman/transit-vnet.conf

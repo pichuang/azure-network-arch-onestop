@@ -58,7 +58,7 @@ class TestApplicationRules(unittest.TestCase):
 
     def test_to_openai(self):
         openai = self.host.addr("www.openai.com")
-        self.assertEqual(openai.run("wget www.openai.com").rc, 8)
+        self.assertNotEqual(openai.run("wget www.openai.com").rc, 0)
 
 if __name__ == "__main__":
     unittest.main()

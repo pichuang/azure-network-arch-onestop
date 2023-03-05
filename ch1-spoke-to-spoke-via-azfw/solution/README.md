@@ -19,10 +19,6 @@ terraform destroy
 
 ## You May Need to known
 
-### Username / Password
-
-- repairman / Lyc0r!sRec0il
-
 ### IP Address
 
 - vnet-hub (10.73.30.0/24)
@@ -35,6 +31,10 @@ terraform destroy
 - vnet-spoke2 (10.73.33.0/24)
   - vm-spoke2-test
     - nic-spoke2: 10.73.33.4
+
+### Username / Password
+
+- repairman / Lyc0r!sRec0il
 
 ### Access VMs via Azure Basion
 

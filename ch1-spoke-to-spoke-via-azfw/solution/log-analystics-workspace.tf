@@ -30,7 +30,15 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall" {
   log_analytics_destination_type = "AzureDiagnostics"
 
   # enabled_log {
-  #   category = "allLogs"
+  #   category = "AzureFirewallNetworkRule"
+
+  #   retention_policy {
+  #     enabled = false
+  #   }
+  # }
+
+  # enabled_log {
+  #   category = "AZFWNetworkRule"
 
   #   retention_policy {
   #     enabled = false

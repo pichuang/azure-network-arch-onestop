@@ -1,0 +1,11 @@
+[ubuntu-vms]
+hub-vm    ansible_host=10.73.30.164
+spoke1-vm ansible_host=10.73.31.4
+spoke2-vm ansible_host=10.73.33.4
+
+[ubuntu-vms:vars]
+ansible_ssh_user=repairman
+ansible_ssh_pass=Lyc0r!sRec0il
+ansible_python_interpreter=/usr/libexec/platform-python
+http_proxy=""
+https_proxy=""
