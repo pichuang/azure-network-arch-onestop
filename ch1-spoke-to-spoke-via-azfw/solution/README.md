@@ -1,6 +1,6 @@
-# Challenge 1: Spoke-to-Spoke via Azure Firewall
+# Solution 1: Spoke-to-Spoke via Azure Firewall
 
-## Challenge Accept
+## Show Solution
 
 ``` bash
 # For new challenger
@@ -9,7 +9,7 @@ terraform plan
 terraform apply -auto-approve
 ```
 
-- Destory Challenge 1
+- Destory Solution 1
 
 ``` bash
 terraform destroy -auto-approve

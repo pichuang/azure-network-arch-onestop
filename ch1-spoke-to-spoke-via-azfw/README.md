@@ -10,6 +10,14 @@
   5. Make sure all VMs can download source from pypi, github, and deny access to other sites
   6. Azure Firewall logs should be enabled and sent to Log Analytics, and the logs should be queried to show the traffic.
 
+## How to play?
+
+Switch to the challenge directory, and run the following command to create the challenge environment.
+
+``` bash
+cd ./challenge
+```
+
 ## How to validate?
 
 For Success Criteria 1 ~ 5, Please access to VMs through Azure Bastion, and run the following command to validate the success criteria.
