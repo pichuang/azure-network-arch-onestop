@@ -1,6 +1,7 @@
 # Challenge 1: Spoke to Spoke via Azure Firewall
 
-![Topology](./images/ch1-toplogy.png)
+![Topology](./assets/ch1-toplogy.png)
+Download ![VISIO VSDX](./assets/ch1-toplogy.vsdx)
 
 - Goal: Create a hub and spoke topology with two spokes connected via Azure Firewall.
 
@@ -32,11 +33,11 @@ and all tests should pass.
 
 - All pass
 
-![Challenge 1 All Pass!](./images/test-ch1-allpass.gif)
+![Challenge 1 All Pass!](./assets/test-ch1-allpass.gif)
 
 For Success Criteria 6, Please access to Azure Portal, and check the following items.
 
-![Azure Firewall Vaildation](./images/firewall-vaildation.png)
+![Azure Firewall Vaildation](./assets/firewall-vaildation.png)
 
 ## Known Issues
 
