@@ -56,6 +56,10 @@ class TestApplicationRules(unittest.TestCase):
         self.assertTrue(pypi.is_resolvable)
         # self.assertFalse(pypi.is_reachable)
 
+    def test_to_pythonhosted(self):
+        pythonhosted = self.host.addr("files.pythonhosted.org")
+        self.assertTrue(pythonhosted.is_resolvable)
+
     def test_to_openai(self):
         openai = self.host.addr("www.openai.com")
         self.assertNotEqual(openai.run("wget www.openai.com").rc, 0)

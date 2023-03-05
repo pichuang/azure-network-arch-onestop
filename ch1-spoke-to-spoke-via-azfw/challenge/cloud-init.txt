@@ -1,0 +1,34 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+
+packages:
+  - iputils-ping
+  - mtr
+  - git
+  - vim
+  - dnsutils
+  - python3-pip
+  - ansible
+
+write_files:
+  - path: /home/repairman/transit-vnet.conf
+    content: |
+      nic-spoke1 10.73.31.4
+      nic-spoke2 10.73.33.4
+      nic-hub 10.73.30.164
+      firewall-hub 10.73.30.4
+
+  - path: /home/repairman/simple-http-server.py
+    content: |
+      #!/bin/bash
+      sudo python3 -m http.server 80
+
+
+runcmd:
+  - cd /home/repairman
+  - git clone https://github.com/upa/deadman
+  - chown -R "repairman:repairman" /home/repairman/deadman
+  - pip install --upgrade pip
+  - pip install pytest-testinfra
+  - git clone https://github.com/pichuang/azure-network-challenge
