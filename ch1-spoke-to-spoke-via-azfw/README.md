@@ -1,5 +1,7 @@
 # Challenge 1: Spoke to Spoke via Azure Firewall
 
+![Topology](./images/ch1-toplogy.png)
+
 - Goal: Create a hub and spoke topology with two spokes connected via Azure Firewall.
 
 - Susccess Criteria

@@ -17,6 +17,10 @@ resource "azurerm_subnet" "azurefirewallsubnet" {
   resource_group_name  = var.lab-rg
   virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.0/26"]
+
+  depends_on = [
+    azurerm_virtual_network.vnet-hub
+  ]
 }
 
 resource "azurerm_subnet" "routeserversubnet" {
@@ -24,6 +28,10 @@ resource "azurerm_subnet" "routeserversubnet" {
   resource_group_name  = var.lab-rg
   virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.64/26"]
+
+  depends_on = [
+    azurerm_virtual_network.vnet-hub
+  ]
 }
 
 resource "azurerm_subnet" "gatewaysubnet" {
@@ -31,6 +39,10 @@ resource "azurerm_subnet" "gatewaysubnet" {
   resource_group_name  = var.lab-rg
   virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.128/27"]
+
+  depends_on = [
+    azurerm_virtual_network.vnet-hub
+  ]
 }
 
 resource "azurerm_subnet" "subnet-hub" {
@@ -38,6 +50,10 @@ resource "azurerm_subnet" "subnet-hub" {
   resource_group_name  = var.lab-rg
   virtual_network_name = azurerm_virtual_network.vnet-hub.name
   address_prefixes     = ["10.73.30.160/27"]
+
+  depends_on = [
+    azurerm_virtual_network.vnet-hub
+  ]
 }
 
 resource "azurerm_subnet" "azurebastionsubnet" {
