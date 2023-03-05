@@ -3,18 +3,16 @@
 ## Challenge Accept
 
 ``` bash
+# For new challenger
 terraform init
 terraform plan
 terraform apply -auto-approve
-
-# Debug
-TF_LOG="DEBUG" terraform apply -auto-approve
 ```
 
-- Destory architecture
+- Destory Challenge 1
 
 ``` bash
-terraform destroy
+terraform destroy -auto-approve
 ```
 
 ## You May Need to known
@@ -23,7 +21,7 @@ terraform destroy
 
 - vnet-hub (10.73.30.0/24)
   - vm-hub-test
-    - nic-hub: 10.73.30.5
+    - nic-hub: 10.73.30.164
   - firewall: 10.73.30.4
 - vnet-spoke1 (10.73.31.0/24)
   - vm-spoke1-test
@@ -55,6 +53,9 @@ az network bastion ssh --name bastion --resource-group rg-challenge-01 --target-
 curl ifconfig.me/all
 ```
 
-### Test Driven Development
+## Misc
 
-- [ ] Test 1: vm-hub-test can ping vm-spoke1-test
+```
+# For debug only
+TF_LOG="DEBUG" terraform apply -auto-approve
+```

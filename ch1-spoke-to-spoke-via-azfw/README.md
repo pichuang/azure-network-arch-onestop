@@ -21,9 +21,21 @@ pytest -p no:cacheprovider -v test-challenge1.py
 and all tests should pass.
 
 - All pass
-![](./images/test-ch1-allpass.gif)
 
+![Challenge 1 All Pass!](./images/test-ch1-allpass.gif)
 
 For Success Criteria 6, Please access to Azure Portal, and check the following items.
 
-![](./images/firewall-vaildation.png)
+![Azure Firewall Vaildation](./images/firewall-vaildation.png)
+
+## Known Issues
+
+### Issue 1: Error when creating azurerm_monitor_diagnostic_setting
+
+``` bash
+│ Error: creating Monitor Diagnostics Setting "diagnostic-for-firewall" for Resource "/subscriptions//resourceGroups/rg-challenge-01/providers/Microsoft.Network/azureFirewalls/firewall": insights.DiagnosticSettingsClient#CreateOrUpdate: Failure responding to request: StatusCode=400 -- Original Error: autorest/azure: Service returned an error. Status=400 Code="BadRequest" Message="Invalid API version used to modify diagnostic setting with one or more category groups selected: diagnostic-for-firewall, please use version higher than: 2021-05-01-preview"
+│
+│   with azurerm_monitor_diagnostic_setting.diagnostic-for-firewall,
+│   on log-analystics-workspace.tf line 24, in resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall":
+│   24: resource "azurerm_monitor_diagnostic_setting" "diagnostic-for-firewall" {
+```
