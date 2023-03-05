@@ -184,7 +184,11 @@ resource "azurerm_public_ip" "pip-vpn1" {
   name                = "pip-vpn1"
   location            = var.lab-location
   resource_group_name = var.lab-rg
-  allocation_method   = "Dynamic"
+  allocation_method   = "Dynamic"w
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 # resource "azurerm_public_ip" "pip-vpn2" {

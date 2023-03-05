@@ -66,20 +66,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "fprcg-for-transit" {
   firewall_policy_id = azurerm_firewall_policy.firewall-policy-for-transit.id
   priority           = 65000
 
-  network_rule_collection {
-    name     = "network-rule-collection-for-transit"
-    priority = 200
-    action   = "Allow"
 
-  }
-
-  application_rule_collection {
-    name     = "application-rule-collection-for-transit"
-    priority = 300
-    action   = "Allow"
-
-
-  }
 
   depends_on = [
     azurerm_firewall_policy.firewall-policy-for-transit
