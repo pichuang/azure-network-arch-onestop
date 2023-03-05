@@ -27,6 +27,7 @@ write_files:
 runcmd:
   - cd /home/repairman
   - git clone https://github.com/upa/deadman
-  - chown -R /home/repairman/deadman
+  - chown -R "repairman:repairman" /home/repairman/deadman
   - pip install --upgrade pip
   - pip install pytest-testinfra
+  - git clone https://github.com/pichuang/azure-network-challenge

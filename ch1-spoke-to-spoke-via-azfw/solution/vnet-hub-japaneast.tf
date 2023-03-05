@@ -68,6 +68,10 @@ resource "azurerm_route_table" "rt-for-fw" {
 resource "azurerm_subnet_route_table_association" "associate-rt-to-fw-and-azurefirewallsubnet" {
   subnet_id      = azurerm_subnet.azurefirewallsubnet.id
   route_table_id = azurerm_route_table.rt-for-fw.id
+
+  depends_on = [
+    azurerm_firewall.firewall
+  ]
 }
 
 

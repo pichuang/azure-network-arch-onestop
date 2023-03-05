@@ -1,9 +1,16 @@
 #!/usr/bin/env python3
 
+"""
+As a user, I want to be able to access the restricr internet and intranet from my Azure VM in spoke Azure VNet throught Azure Firewall
+"""
+
 import unittest
 import testinfra
 
 class TestNetworkRules(unittest.TestCase):
+    """
+    Test that the network rules are working as expected.
+    """
 
     def setUp(self):
         self.host = testinfra.get_host("local://")
@@ -21,6 +28,9 @@ class TestNetworkRules(unittest.TestCase):
         self.assertTrue(self.host.addr("10.73.30.4").is_reachable)
 
 class TestApplicationRules(unittest.TestCase):
+    """
+    Test that the application rules are working as expected.
+    """
 
     def setUp(self):
         self.host = testinfra.get_host("local://")
