@@ -1,7 +1,7 @@
 # Challenge 1: Spoke to Spoke via Azure Firewall
 
 ![Topology](./assets/ch1-topology.png)
-Download [VISIO VSDX](./assets/ch1-toplogy.vsdx)
+Download [VISIO VSDX](./assets/ch1-topology.vsdx)
 
 - Goal: Create a hub and spoke topology with two spokes connected via Azure Firewall.
 
