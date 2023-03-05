@@ -63,6 +63,9 @@ resource "azurerm_route_table" "rt-for-fw" {
     next_hop_type  = "Internet"
   }
 
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 resource "azurerm_subnet_route_table_association" "associate-rt-to-fw-and-azurefirewallsubnet" {
@@ -147,6 +150,10 @@ resource "azurerm_public_ip" "pip-bastion" {
   resource_group_name = var.lab-rg
   allocation_method   = "Static"
   sku                 = "Standard"
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 resource "azurerm_bastion_host" "bastion" {
@@ -237,6 +244,10 @@ resource "azurerm_network_security_group" "nsg-hub" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 # Create network interface card

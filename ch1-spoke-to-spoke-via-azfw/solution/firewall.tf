@@ -8,6 +8,10 @@ resource "azurerm_public_ip" "pip-fw-1" {
   resource_group_name = var.lab-rg
   allocation_method   = "Static"
   sku                 = "Standard"
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 resource "azurerm_firewall" "firewall" {

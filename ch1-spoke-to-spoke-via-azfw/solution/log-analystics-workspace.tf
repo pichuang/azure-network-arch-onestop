@@ -14,6 +14,9 @@ resource "azurerm_log_analytics_workspace" "law-log-center" {
   internet_query_enabled     = true
   # reservation_capacity_in_gb_per_day = 100
 
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/monitor_diagnostic_setting

@@ -89,6 +89,10 @@ resource "azurerm_network_security_group" "nsg-spoke1" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 # Create network interface card

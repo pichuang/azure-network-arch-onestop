@@ -91,6 +91,10 @@ resource "azurerm_network_security_group" "nsg-spoke2" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+
+  depends_on = [
+    azurerm_resource_group.resource-group
+  ]
 }
 
 # Create network interface card
@@ -105,6 +109,7 @@ resource "azurerm_network_interface" "nic-spoke2" {
     private_ip_address_allocation = "Static"
     private_ip_address            = "10.73.33.4"
   }
+
 }
 
 # Connect the security group to the network interface
