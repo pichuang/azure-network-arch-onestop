@@ -21,9 +21,9 @@ pytest -p no:cacheprovider -v test-challenge1.py
 and all tests should pass.
 
 - All pass
-![](/images/tech-ch1-allpass.gif)
+![](./images/test-ch1-allpass.gif)
 
 
 For Success Criteria 6, Please access to Azure Portal, and check the following items.
 
-![](/images/firewall-vaildation.png)
+![](./images/firewall-vaildation.png)
