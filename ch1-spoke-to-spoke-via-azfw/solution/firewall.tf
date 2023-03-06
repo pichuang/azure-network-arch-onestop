@@ -96,7 +96,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "fprcg-for-transit" {
     action   = "Allow"
 
     rule {
-      name = "ap3plication-rule-http-any-to-os-repository"
+      name = "application-rule-http-any-to-os-repository"
       protocols {
         type = "Http"
         port = 80
